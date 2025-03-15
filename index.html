@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SQL 查詢語法指令手冊</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-white dark:bg-[#151515] text-gray-900 dark:text-gray-100 antialiased">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+        <!-- Header Section -->
+        <header class="flex items-center justify-between mb-10">
+            <div class="flex items-center space-x-3">
+                <img src="logo.svg" alt="SQL Guide Logo" class="h-8 w-8">
+                <h1 class="text-2xl font-bold tracking-tight">SQL 查詢語法指令手冊</h1>
+            </div>
+            <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun hidden dark:block"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon block dark:hidden"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+        </header>
+
+        <!-- Search Bar -->
+        <div class="mb-10">
+            <div class="relative">
+                <input type="text" id="search-input" class="w-full px-4 py-3 pr-10 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] focus:outline-none focus:ring-2 focus:ring-blue-500 font-geist-mono text-sm transition-colors" placeholder="搜尋 SQL 命令 (例如: select, join, where...)">
+                <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                    <img src="search-icon.svg" alt="搜尋" class="w-5 h-5">
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Tabs -->
+        <div class="mb-8">
+            <div class="flex items-center space-x-4 border-b border-gray-200 dark:border-gray-800 overflow-x-auto hide-scrollbar">
+                <button class="tab-button active py-3 px-1 border-b-2 border-transparent font-medium text-sm whitespace-nowrap" data-tab="all">所有命令</button>
+                <button class="tab-button py-3 px-1 border-b-2 border-transparent font-medium text-sm whitespace-nowrap" data-tab="query">查詢語句</button>
+                <button class="tab-button py-3 px-1 border-b-2 border-transparent font-medium text-sm whitespace-nowrap" data-tab="dml">資料操作</button>
+                <button class="tab-button py-3 px-1 border-b-2 border-transparent font-medium text-sm whitespace-nowrap" data-tab="ddl">資料定義</button>
+                <button class="tab-button py-3 px-1 border-b-2 border-transparent font-medium text-sm whitespace-nowrap" data-tab="tcl">事務控制</button>
+                <button class="tab-button py-3 px-1 border-b-2 border-transparent font-medium text-sm whitespace-nowrap" data-tab="advanced">進階操作</button>
+            </div>
+        </div>
+
+        <!-- SQL Commands Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <!-- Command cards will be dynamically inserted here -->
+        </div>
+
+        <!-- Command Detail Panel (Hidden by default) -->
+        <div id="command-detail" class="hidden mb-8">
+            <div class="bg-white dark:bg-[#1a1a1a] rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
+                <div class="border-b border-gray-200 dark:border-gray-800 p-4">
+                    <div class="flex items-center justify-between">
+                        <h2 id="detail-title" class="text-xl font-semibold"></h2>
+                        <button id="close-detail" class="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-medium mb-2">語法</h3>
+                        <div class="bg-gray-100 dark:bg-[#252525] p-4 rounded-lg overflow-x-auto">
+                            <pre id="detail-syntax" class="text-sm font-geist-mono text-gray-800 dark:text-gray-300 whitespace-pre-wrap"></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-lg font-medium mb-2">說明</h3>
+                        <p id="detail-description" class="text-gray-700 dark:text-gray-300"></p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-medium mb-2">範例</h3>
+                        <div id="examples-container">
+                            <!-- Examples will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center text-sm text-gray-500 dark:text-gray-400 pt-6 pb-4">
+            <p>Built with <a href="#" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">muyi</a>.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+    window.addEventListener("wheel", (e)=> {
+        const isPinching = e.ctrlKey
+        if(isPinching) e.preventDefault()
+    }, { passive: false })
+    </script>
+</body>
+</html>
